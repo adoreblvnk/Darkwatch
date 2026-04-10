@@ -1,74 +1,112 @@
-# DarkWatch: The Cart Cleanser — Technical Spec
-
-**AI-powered autonomous shopping proxy. Sanitizing the web's militarized UX in real time.**
-
-DarkWatch is an "Autonomous Shopping Bodyguard" that protects consumers by acting as a proxy agent. It identifies and strips deceptive junk fees, verifies product authenticity through community cross-referencing, and exposes massive retail markups on dropshipped goods.
-
----
-
-## Architecture Overview
-
-DarkWatch operates in three distinct phases: **The Watchtower**, **The Sanitizer**, and **The Clean Reveal**.
-
-### 1. The Watchtower (Intelligence Phase)
-- **Engine:** TinyFish SDK + OpenAI GPT-4o-mini
-- **Process:** An autonomous stealth browser instance is launched via TinyFish. It navigates the target domain while streaming live "Thought Trace" logs via Server-Sent Events (SSE).
-- **Probes:**
-  - **Community Probe:** Scrapes Reddit (r/Scams, r/Reviews) for real-world user experiences and color accuracy reports.
-  - **Wholesale Probe:** Simultaneously searches wholesale platforms (Alibaba/AliExpress) to find the original source and calculate retail markups.
-
-### 2. The Sanitizer (Action Phase)
-- **Engine:** TinyFish + GPT-4o (Vision)
-- **Process:**
-  - **Cart Cleansing:** The agent navigates to the checkout page, identifies pre-checked "Shipping Guarantees" or hidden insurance fees, and autonomously un-checks them.
-  - **Spatial Validation (Nano Banana 2):** Extracts physical dimensions from the product page and generates a scale-comparison image using multimodal vision to prevent deceptive sizing (comparing products to a Credit Card or iPhone for scale).
-
-### 3. The Clean Reveal (Result Phase)
-- **UI:** Transitions from a "Dark Hacker Terminal" to a "Minimalist Light Receipt".
-- **Data:** Surfaces "Junk Fees Stripped", "True Price", "Trust Score (0-100)", and a final "Verdict" (Safe / Sketchy / Skip).
+<div align="center"> <!-- use align as CSS is not allowed on GitHub markdown https://github.com/orgs/community/discussions/22728 -->
+  <img src="demo/thumbnail.png" alt="Darkwatch Logo" width="100"> <!-- Logo -->
+  <h1>Darkwatch</h1> <!-- Project Name -->
+  <p> <!-- Description -->
+    AI-powered autonomous shopping proxy exposing e-commerce bait-and-switch tactics and deceptive patterns in real time.
+  </p>
+  <p> <!-- Built With -->
+    Built With: Next.js &bull; Tailwind CSS &bull; GMI Cloud (GLM-5-FP8) &bull; TinyFish &bull; Framer Motion
+  </p>
+</div>
 
 ---
 
-## Technical Stack
+<details>
+<summary>Table of Contents</summary>
 
-- **Framework:** Next.js 16 (App Router)
-- **Runtime:** Bun
-- **Browser Orchestration:** TinyFish SDK (Stealth Browser, US/Global Proxies)
-- **AI Models:**
-  - `gpt-4o`: Multi-modal vision for checkout and spatial analysis.
-  - `gpt-4o-mini`: Fast, low-latency log generation and pattern extraction.
-  - `gemini-2.0-flash`: Fallback for spatial reasoning and ethical analysis.
-- **Styling:** Tailwind CSS + shadcn/ui + Framer Motion.
-- **Data:** Server-Sent Events (SSE) for real-time log streaming.
+- [About](#about)
+- [Demo](#demo)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Execution](#execution)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Changelog](#changelog)
+</details>
 
----
+## About
 
-## Environment Configuration
+**Darkwatch** is an "Autonomous Shopping Bodyguard" built for the Next.js/TinyFish/GLM-5 Hackathon. It specializes in "Hidden Variant Detection"—exposing bait-and-switch scenarios where a listing advertises a high-quality product (e.g., a premium pink phone case) but defaults to a cheaper, inferior variant (e.g., a yellowing white case) in the checkout payload.
 
-Create a `.env.local` file with the following keys:
+By leveraging **TinyFish** for robust, CAPTCHA-bypassing web scraping and **GMI Cloud's GLM-5-FP8 model** for deep semantic analysis of reviews and product payloads, Darkwatch automatically scans product links and visualizes deceptive tactics before the user makes a purchase.
 
-```bash
-OPENAI_API_KEY=sk-...
-TINYFISH_API_KEY=...
-GEMINI_API_KEY=...
-```
+## Demo
 
----
+<div align="center">
+  <img src="demo/slide_1.png" alt="Darkwatch Slide 1" width="750">
+  <br><br>
+  <img src="demo/slide_2.png" alt="Darkwatch Slide 2" width="750">
+  <br><br>
+  <img src="demo/slide_3.png" alt="Darkwatch Slide 3" width="750">
+</div>
 
 ## Getting Started
 
-```bash
-# Install dependencies
-bun install
+### Prerequisites
 
-# Run the development server
+- [Bun](https://bun.sh/) (or Node.js v18+)
+- API Keys:
+  - GMI Cloud API Key
+  - TinyFish API Key
+
+### Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/yourusername/darkwatch.git
+cd darkwatch
+bun install
+```
+
+Set up your environment variables:
+
+```bash
+cp .env.example .env.local
+```
+
+Add your `GMI_API_KEY` and `TINYFISH_API_KEY` to the `.env.local` file.
+
+### Execution
+
+Start the Next.js development server:
+
+```bash
 bun dev
 ```
 
-Visit `localhost:3000` to start a scan. Use a target like `shein.com` with a query like `iphone 16 case` to see the full "Watchtower" experience in action.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
----
+## Usage
 
-## License
+1. Paste a suspected e-commerce product URL into the Darkwatch scanning bar (e.g. `shein.com`).
+2. The system initiates an autonomous TinyFish agent to navigate the site, bypass CAPTCHAs via stealth profiles, and extract the real checkout payload and hidden reviews.
+3. GMI Cloud's AI analyzes the extracted data to identify bait-and-switch tactics.
+4. Review the generated report, utilizing the interactive lightbox to examine evidence screenshots and variant mismatches.
 
-MIT
+## Roadmap
+
+- [x] Initial hackathon prototype (Next.js + TinyFish + GMI Cloud)
+- [x] Implement global image lightbox for evidence review
+- [x] Bypass complex slider CAPTCHAs with stealth navigation
+- [ ] Develop a browser extension for real-time shopping protection
+- [ ] Expand supported e-commerce platforms (Amazon, Temu, AliExpress)
+- [ ] Real-time community reporting dashboard
+
+## Changelog
+
+See [CHANGELOG](CHANGELOG.md) for details.
+
+## License <!-- omit in toc -->
+
+Distributed under the MIT License.
+
+## Credits <!-- omit in toc -->
+
+- Built for the Next.js/TinyFish/GLM-5 Hackathon.
+
+## Acknowledgements <!-- omit in toc -->
+
+<!-- Inspired by Best-README-Template (https://github.com/othneildrew/Best-README-Template) -->
+<!-- Table of Contents generated by Markdown All in One (https://github.com/yzhang-gh/vscode-markdown) -->
